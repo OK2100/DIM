@@ -8,7 +8,11 @@ Oleg Kuznetcov - vseOk37@yandex.ru  								Moscow 2019
 							+ Compiled for linux x64
 							+ Added Setup.sh script (tcsh) 
 
+	Signal			-	void commandRecieved(QString parName,qint32 parValue);
+	Slot			-	void updateService(QString parName,qint32 parValue);
 
+
+			
 
 
 
