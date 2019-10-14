@@ -70,17 +70,17 @@ PM::PM(QString _name)
     vChans.reserve(12);
 
     vChans.push_back(new PMChannel(name+"CH01/"));
-    vChans.push_back(new PMChannel(name+"CH02/"));
-    vChans.push_back(new PMChannel(name+"CH03/"));
-    vChans.push_back(new PMChannel(name+"CH04/"));
-    vChans.push_back(new PMChannel(name+"CH05/"));
-    vChans.push_back(new PMChannel(name+"CH06/"));
-    vChans.push_back(new PMChannel(name+"CH07/"));
-    vChans.push_back(new PMChannel(name+"CH08/"));
-    vChans.push_back(new PMChannel(name+"CH09/"));
-    vChans.push_back(new PMChannel(name+"CH10/"));
-    vChans.push_back(new PMChannel(name+"CH11/"));
-    vChans.push_back(new PMChannel(name+"CH12/"));
+//    vChans.push_back(new PMChannel(name+"CH02/"));
+//    vChans.push_back(new PMChannel(name+"CH03/"));
+//    vChans.push_back(new PMChannel(name+"CH04/"));
+//    vChans.push_back(new PMChannel(name+"CH05/"));
+//    vChans.push_back(new PMChannel(name+"CH06/"));
+//    vChans.push_back(new PMChannel(name+"CH07/"));
+//    vChans.push_back(new PMChannel(name+"CH08/"));
+//    vChans.push_back(new PMChannel(name+"CH09/"));
+//    vChans.push_back(new PMChannel(name+"CH10/"));
+//    vChans.push_back(new PMChannel(name+"CH11/"));
+//    vChans.push_back(new PMChannel(name+"CH12/"));
 
 }
 
@@ -97,25 +97,25 @@ AllParameters::AllParameters() :
     vPMs.reserve(20);
 
     vPMs.push_back(new PM(name+"PM01/"));
-    vPMs.push_back(new PM(name+"PM02/"));
-    vPMs.push_back(new PM(name+"PM03/"));
-    vPMs.push_back(new PM(name+"PM04/"));
-    vPMs.push_back(new PM(name+"PM05/"));
-    vPMs.push_back(new PM(name+"PM06/"));
-    vPMs.push_back(new PM(name+"PM07/"));
-    vPMs.push_back(new PM(name+"PM08/"));
-    vPMs.push_back(new PM(name+"PM09/"));
-    vPMs.push_back(new PM(name+"PM10/"));
-    vPMs.push_back(new PM(name+"PM11/"));
-    vPMs.push_back(new PM(name+"PM12/"));
-    vPMs.push_back(new PM(name+"PM13/"));
-    vPMs.push_back(new PM(name+"PM14/"));
-    vPMs.push_back(new PM(name+"PM15/"));
-    vPMs.push_back(new PM(name+"PM16/"));
-    vPMs.push_back(new PM(name+"PM17/"));
-    vPMs.push_back(new PM(name+"PM18/"));
-    vPMs.push_back(new PM(name+"PM19/"));
-    vPMs.push_back(new PM(name+"PM20/"));
+//    vPMs.push_back(new PM(name+"PM02/"));
+//    vPMs.push_back(new PM(name+"PM03/"));
+//    vPMs.push_back(new PM(name+"PM04/"));
+//    vPMs.push_back(new PM(name+"PM05/"));
+//    vPMs.push_back(new PM(name+"PM06/"));
+//    vPMs.push_back(new PM(name+"PM07/"));
+//    vPMs.push_back(new PM(name+"PM08/"));
+//    vPMs.push_back(new PM(name+"PM09/"));
+//    vPMs.push_back(new PM(name+"PM10/"));
+//    vPMs.push_back(new PM(name+"PM11/"));
+//    vPMs.push_back(new PM(name+"PM12/"));
+//    vPMs.push_back(new PM(name+"PM13/"));
+//    vPMs.push_back(new PM(name+"PM14/"));
+//    vPMs.push_back(new PM(name+"PM15/"));
+//    vPMs.push_back(new PM(name+"PM16/"));
+//    vPMs.push_back(new PM(name+"PM17/"));
+//    vPMs.push_back(new PM(name+"PM18/"));
+//    vPMs.push_back(new PM(name+"PM19/"));
+//    vPMs.push_back(new PM(name+"PM20/"));
 
 }
 

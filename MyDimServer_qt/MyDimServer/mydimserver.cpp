@@ -29,22 +29,25 @@ MyDimServer::~MyDimServer()
 
 void MyDimServer::startServer()
 {
+    qDebug() << serverName;
+    qDebug() << dnsNode;
+
+    setDnsNode(qPrintable(dnsNode));
+    start(qPrintable(serverName));
     qDebug()
              << "###################################################" << endl
              << "Start DIM server on" << dnsNode << endl
              << "###################################################" << endl;
 
-    setDnsNode(qPrintable(dnsNode));
-    start(qPrintable(serverName));
 }
 
 void MyDimServer::stopServer()
 {
+    stop();
     qDebug()
              << "###################################################" << endl
              << "Stop DIM server"  << endl
              << "###################################################" << endl;
-    stop();
 }
 
 void MyDimServer::fillServisesVector()
@@ -128,7 +131,6 @@ void MyDimServer::publishCommands()
 void MyDimServer::commandHandler()
 {
     DimCommand *currCmnd = getCommand();
-
 
     qDebug() << "Recieve command"               // emulator mode
              << currCmnd->getName()

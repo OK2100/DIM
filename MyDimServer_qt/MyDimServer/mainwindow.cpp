@@ -10,9 +10,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     server = new MyDimServer();
-
+//    server->serverName = "TEST";
+//    server->dnsNode = "hplu-Notebook-PC";
+//    server->setDnsNode("hplu-Notebook-PC");
+//    server->start("TEST");
+//    server->startServer();
 }
 
 MainWindow::~MainWindow()
@@ -21,19 +24,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_setDnsButton_clicked()
 {
-    server->serverName = ui->lineEdit->text();
+    server->dnsNode = ui->lineEdit->text();
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_setNameButton_clicked()
 {
-    server->dnsNode = ui->lineEdit_2->text();
+    server->serverName = ui->lineEdit_2->text();
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_startbutton_clicked()
 {
-    if(!server->serverName.isEmpty() && !server->dnsNode.isEmpty()) {
+    if((!server->serverName.isEmpty()) && (!server->dnsNode.isEmpty())) {
         server->startServer();
         ui->lineEdit->setReadOnly(1);
         ui->lineEdit_2->setReadOnly(1);
@@ -43,10 +46,11 @@ void MainWindow::on_pushButton_4_clicked()
     }
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_stoButton_clicked()
 {
     server->stopServer();
+    ui->setDnsButton->setChecked(0);
+    ui->setNameButton->setChecked(0);
     ui->lineEdit->setReadOnly(0);
     ui->lineEdit_2->setReadOnly(0);
-
 }

@@ -29,14 +29,14 @@ public:
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
     QGridLayout *gridLayout;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
-    QLineEdit *lineEdit_2;
-    QLabel *label_2;
+    QPushButton *setDnsButton;
+    QPushButton *setNameButton;
+    QPushButton *stoButton;
     QLineEdit *lineEdit;
+    QPushButton *startbutton;
+    QLabel *label_2;
     QLabel *label;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton;
+    QLineEdit *lineEdit_2;
     QTextEdit *textEdit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -57,45 +57,49 @@ public:
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        pushButton_2 = new QPushButton(centralwidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        setDnsButton = new QPushButton(centralwidget);
+        setDnsButton->setObjectName(QString::fromUtf8("setDnsButton"));
+        setDnsButton->setCheckable(true);
+        setDnsButton->setAutoDefault(false);
+        setDnsButton->setFlat(false);
 
-        gridLayout->addWidget(pushButton_2, 1, 2, 1, 1);
+        gridLayout->addWidget(setDnsButton, 0, 2, 1, 1);
 
-        pushButton_3 = new QPushButton(centralwidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        setNameButton = new QPushButton(centralwidget);
+        setNameButton->setObjectName(QString::fromUtf8("setNameButton"));
+        setNameButton->setCheckable(true);
 
-        gridLayout->addWidget(pushButton_3, 3, 2, 1, 1);
+        gridLayout->addWidget(setNameButton, 1, 2, 1, 1);
 
-        lineEdit_2 = new QLineEdit(centralwidget);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        stoButton = new QPushButton(centralwidget);
+        stoButton->setObjectName(QString::fromUtf8("stoButton"));
 
-        gridLayout->addWidget(lineEdit_2, 1, 1, 1, 1);
-
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+        gridLayout->addWidget(stoButton, 3, 2, 1, 1);
 
         lineEdit = new QLineEdit(centralwidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
         gridLayout->addWidget(lineEdit, 0, 1, 1, 1);
 
+        startbutton = new QPushButton(centralwidget);
+        startbutton->setObjectName(QString::fromUtf8("startbutton"));
+
+        gridLayout->addWidget(startbutton, 2, 2, 1, 1);
+
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
-        pushButton_4 = new QPushButton(centralwidget);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        lineEdit_2 = new QLineEdit(centralwidget);
+        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
 
-        gridLayout->addWidget(pushButton_4, 2, 2, 1, 1);
-
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-
-        gridLayout->addWidget(pushButton, 0, 2, 1, 1);
+        gridLayout->addWidget(lineEdit_2, 1, 1, 1, 1);
 
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
@@ -122,14 +126,14 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
-        lineEdit_2->setText(QCoreApplication::translate("MainWindow", "FIT DIM server", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Set DIM server name:", nullptr));
+        setDnsButton->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
+        setNameButton->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
+        stoButton->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
         lineEdit->setText(QCoreApplication::translate("MainWindow", "hplu-Notebook-PC", nullptr));
+        startbutton->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Set DIM server name:", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Set DNS node:", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
+        lineEdit_2->setText(QCoreApplication::translate("MainWindow", "FIT DIM server", nullptr));
         textEdit->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
