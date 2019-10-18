@@ -14,6 +14,8 @@ Oleg Kuznetcov - vseOk37@yandex.ru  								Moscow 2019
 
 	./DIM/MyDimServer_qt/RHEL_CENTOS_64	-	RHEL/Centos compiled version
 	./DIM/MyDimServer_qt/UBUNTU_64s 	-	Ubuntu compiled version	 
+	
+	do ($ source setenv.sh) before starting
 
 			
 
