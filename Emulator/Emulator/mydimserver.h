@@ -53,6 +53,15 @@ private:
     void publishServices();
     void publishCommands();
 
+    class PMControlAllApply:public DimCommandHandler
+    {
+        MyDimServer* const my_server;
+        PMControlAllApply(MyDimServer& owner): my_server(&owner){}
+        void commandHandler();
+
+    };
+
+
 };
 
 

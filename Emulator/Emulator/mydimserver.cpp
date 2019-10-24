@@ -137,8 +137,13 @@ void MyDimServer::commandHandler()
     DimCommand *currCmnd = getCommand();
 
     cout << "~Recieve command " << currCmnd->getName() << " " << currCmnd->getInt() << endl;
-
-    cout << "Position: " << vDimCommands.indexOf(currCmnd) + 1 << endl;
+//    cout << "Position: " << vDimCommands.indexOf(currCmnd) + 1 << endl;
+    int idx = vDimCommands.indexOf(currCmnd);
+    QString name(currCmnd->getName());
+    if(name.left(2)=="S/"){
+        vServiceParameters[idx]->data = currCmnd->getInt();
+        cout << "@ Set as new " << vCommandParameters[idx]->name << vCommandParameters[idx]->data;
+    }
 
 
     /*      emiting signal will be here         */
@@ -169,6 +174,17 @@ void MyDimServer::updateNew(QString parName,qint32 parValue)
 
 //===================================================================================================
 
+void MyDimServer::PMControlAllApply::commandHandler()
+{
+    DimCommand* currCmnd = getCommand();
+    int idx = my_server->vDimCommands.indexOf(currCmnd)+1;
+    if(idx!=-1) {
+        for(uint i=1;i<30;i++) {
+
+        }
+    }
+
+}
 
 
 
