@@ -1455,11 +1455,9 @@ mainwindow.o: ../MyDimServer/mainwindow.cpp ../MyDimServer/mainwindow.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qtguiversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../MyDimServer/mainwindow.cpp
 
-mydimserver.o: ../MyDimServer/mydimserver.cpp ../MyDimServer/mydimserver.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QObject \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobject.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
+mydimserver.o: ../MyDimServer/mydimserver.cpp /home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QDebug \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qdebug.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qalgorithms.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qglobal.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qconfig.h \
@@ -1481,20 +1479,20 @@ mydimserver.o: ../MyDimServer/mydimserver.cpp ../MyDimServer/mydimserver.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qmutex.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qnumeric.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qversiontagging.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstring.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qhash.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qchar.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qiterator.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qlist.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qrefcount.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstring.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstringliteral.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstringalgorithms.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstringview.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstringbuilder.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qlist.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qalgorithms.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qiterator.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qhashfunctions.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qpair.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qvector.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qpoint.h \
@@ -1502,25 +1500,29 @@ mydimserver.o: ../MyDimServer/mydimserver.cpp ../MyDimServer/mydimserver.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstringlist.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qregexp.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qmap.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobject.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcoreevent.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qscopedpointer.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qmetatype.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcontainerfwd.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qobject_impl.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QTextStream \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qtextstream.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qiodevice.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qlocale.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qvariant.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qmap.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qdebug.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qhash.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qshareddata.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qset.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcontiguouscache.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qsharedpointer.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qshareddata.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../MyDimServer/global.cpp \
+		../MyDimServer/mydimserver.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QObject \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QTextStream \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QFile \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qfile.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qfiledevice.h \
@@ -1532,8 +1534,7 @@ mydimserver.o: ../MyDimServer/mydimserver.cpp ../MyDimServer/mydimserver.h \
 		../../dim_v20r26/dim/dic.h \
 		../../dim_v20r26/dim/dim.hxx \
 		../../dim_v20r26/dim/sllist.hxx \
-		../../dim_v20r26/dim/dllist.hxx \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QDebug
+		../../dim_v20r26/dim/dllist.hxx
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mydimserver.o ../MyDimServer/mydimserver.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

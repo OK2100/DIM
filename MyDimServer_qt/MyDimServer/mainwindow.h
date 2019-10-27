@@ -24,13 +24,13 @@ public:
 
 private slots:
 
-    void on_setDnsButton_clicked();
+//    void on_setDnsButton_clicked();
 
-    void on_setNameButton_clicked();
+//    void on_setNameButton_clicked();
 
-    void on_startbutton_clicked();
+//    void on_startbutton_clicked();
 
-    void on_stoButton_clicked();
+//    void on_stoButton_clicked();
 
 private:
     Ui::MainWindow *ui;

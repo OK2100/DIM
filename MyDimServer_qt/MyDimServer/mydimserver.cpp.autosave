@@ -79,7 +79,6 @@ void SETnAPPCommand<T>::publishCommand()
 
 }
 
-
 template <class T>
 void SETnAPPCommand<T>::commandHandler()
 {
