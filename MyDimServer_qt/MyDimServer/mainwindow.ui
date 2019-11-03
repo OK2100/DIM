@@ -73,14 +73,14 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Set DIM server name:</string>
+         <string>set DIM server name:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Set DNS node:</string>
+         <string>set DNS node:</string>
         </property>
        </widget>
       </item>

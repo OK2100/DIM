@@ -237,7 +237,6 @@ DIST          = /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/spec_pre.
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/qt_config.prf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/spec_post.prf \
-		../MyDimServer/.qmake.stash \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/toolchain.prf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -448,7 +447,6 @@ Makefile: ../MyDimServer/MyDimServer.pro /home/hplu/Programms/Qt/5.13.0/gcc_64/m
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/qt_config.prf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/toolchain.prf \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -646,7 +644,6 @@ Makefile: ../MyDimServer/MyDimServer.pro /home/hplu/Programms/Qt/5.13.0/gcc_64/m
 /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/qt_config.prf:
 /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/linux-g++/qmake.conf:
 /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/exclusive_builds.prf:
 /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/toolchain.prf:
 /home/hplu/Programms/Qt/5.13.0/gcc_64/mkspecs/features/default_pre.prf:
@@ -1198,45 +1195,14 @@ mainwindow.o: ../MyDimServer/mainwindow.cpp ../MyDimServer/mainwindow.h \
 		../../dim_v20r26/dim/sllist.hxx \
 		../../dim_v20r26/dim/dllist.hxx \
 		ui_mainwindow.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QVariant \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QApplication \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qapplication.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qeventloop.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qguiapplication.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qinputmethod.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QGridLayout \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qgridlayout.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qlayout.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qboxlayout.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QLabel \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qlabel.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QInputDialog \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qinputdialog.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qtextcursor.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qtextformat.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qpen.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qtextoption.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QMenuBar \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qmenubar.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qmenu.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qaction.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QPushButton \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QStatusBar \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qstatusbar.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QTextEdit \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qtextedit.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qtextdocument.h \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QInputDialog \
-		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qinputdialog.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qdialog.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/QMessageBox \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtWidgets/qmessagebox.h \
@@ -1246,6 +1212,7 @@ mainwindow.o: ../MyDimServer/mainwindow.cpp ../MyDimServer/mainwindow.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/QtCoreDepends \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qabstractanimation.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qabstracteventdispatcher.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qeventloop.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qabstractitemmodel.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qabstractproxymodel.h \
@@ -1271,6 +1238,7 @@ mainwindow.o: ../MyDimServer/mainwindow.cpp ../MyDimServer/mainwindow.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcollator.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcommandlineoption.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcommandlineparser.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcoreapplication.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qcryptographichash.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtCore/qdeadlinetimer.h \
@@ -1367,6 +1335,7 @@ mainwindow.o: ../MyDimServer/mainwindow.cpp ../MyDimServer/mainwindow.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qglyphrun.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qrawfont.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qfontdatabase.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qtextdocument.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qaccessible.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qaccessiblebridge.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qaccessibleobject.h \
@@ -1385,6 +1354,8 @@ mainwindow.o: ../MyDimServer/mainwindow.cpp ../MyDimServer/mainwindow.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qgenericmatrix.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qgenericplugin.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qgenericpluginfactory.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qinputmethod.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qiconengine.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qiconengineplugin.h \
 		/home/hplu/Programms/Qt/5.13.0/gcc_64/include/QtGui/qimageiohandler.h \
