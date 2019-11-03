@@ -174,10 +174,11 @@ public:
 class PMPars
 {
 public:
-    PMPars(quint8 PMid,MyDimServer* _server);
+    PMPars(MyDimServer* _server);
 
     MyDimServer* pServer;
     quint8 PMid;
+    void publish();
 
     QVector<PMCHfullPar<quint16>> adczero;
     QVector<PMCHfullPar<quint16>> adcdelay;

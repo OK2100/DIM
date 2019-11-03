@@ -9,14 +9,14 @@ QTextStream cout(stdout);
 
 //  ==========================================  MyDimServer  =============================================
 
-MyDimServer::MyDimServer(QString dns_node,QString server_name)  :   QObject(nullptr)
+MyDimServer::MyDimServer(QString dns_node,QString server_name)  :   QObject(nullptr), pm(1,PMPars(this))
 {
     dnsNode = dns_node;
     serverName = server_name;
     setDnsNode(qPrintable(dnsNode));
 
     for(quint8 i=0;i<1;i++) {
-        pm.push_back(PMPars(i+1,this));
+        pm[i].PMid = i+1;
     }
 
 }
@@ -59,7 +59,7 @@ void MyDimServer::emitSignal(m_appPMSignal pSignal, quint8 PMid)
 
 //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ PMPars @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-PMPars::PMPars(quint8 _PMid,MyDimServer* _server):
+PMPars::PMPars(MyDimServer* _server):
             PMid(0),
             adczero     ( 12,PMCHfullPar<quint16>("ADC_ZERO",_server) ),
             adcdelay    ( 12,PMCHfullPar<quint16>("ADC_DELAY",_server) ),
@@ -126,84 +126,92 @@ PMPars::PMPars(quint8 _PMid,MyDimServer* _server):
             readoutrate     ("REDOUT_RATE",_server)
 
 {
-    PMid = _PMid;
     pServer = _server;
-
-/*
-    //  loop for channels
-    for(quint8 i=0; i<1; i++) {
-
-        adczero[i].Ch = i+1; adczero[i].PM = PMid; adczero[i].publishServices(); adczero[i].publishCommand();
-        adcdelay[i].Ch = i+1; adcdelay[i].PM = PMid; adcdelay[i].publishServices(); adcdelay[i].publishCommand();
-        adc0offset[i].Ch = i+1; adc0offset[i].PM = PMid; adc0offset[i].publishServices(); adc0offset[i].publishCommand();
-        adc1offset[i].Ch = i+1; adc1offset[i].PM = PMid; adc1offset[i].publishServices();adc1offset[i].publishCommand();
-        adc0range[i].Ch = i+1; adc0range[i].PM = PMid; adc0range[i].publishServices(); adc0range[i].publishCommand();
-        adc1range[i].Ch = i+1; adc1range[i].PM = PMid; adc1range[i].publishServices(); adc1range[i].publishCommand();
-        timealin[i].Ch = i+1; timealin[i].PM = PMid; timealin[i].publishServices(); timealin[i].publishCommand();
-        cfdtreshold[i].Ch = i+1; cfdtreshold[i].PM = PMid; cfdtreshold[i].publishServices(); cfdtreshold[i].publishCommand();
-        cfdzero[i].Ch = i+1; cfdzero[i].PM = PMid; cfdzero[i].publishServices(); cfdzero[i].publishCommand();
-
-        alltoch.Ch = i+1; alltoch.PM = PMid; alltoch.publishCommand();
-
-        adc0meanampl[i].Ch = i+1; adc0meanampl[i].PM = PMid; adc0meanampl[i].publishServices();
-        adc1meanampl[i].Ch = i+1; adc1meanampl[i].PM = PMid; adc1meanampl[i].publishServices();
-        adc0zerolvl[i].Ch = i+1; adc0zerolvl[i].PM = PMid; adc0zerolvl[i].publishServices();
-        adc1zerolvl[i].Ch = i+1; adc1zerolvl[i].PM = PMid; adc1zerolvl[i].publishServices();
-        cfdcnt[i].Ch = i+1; cfdcnt[i].PM = PMid; cfdcnt[i].publishServices();
-        trgcnt[i].Ch = i+1; trgcnt[i].PM = PMid; trgcnt[i].publishServices();
-        meantime[i].Ch = i+1; meantime[i].PM = PMid; meantime[i].publishServices();
-    }
-
-    chmask.PM = PMid; chmask.publishCommand(); chmask.publishServices();
-    cfdsatr.PM = PMid; cfdsatr.publishCommand(); cfdsatr.publishServices();
-    orgate.PM = PMid; orgate.publishCommand(); orgate.publishServices();
-    resetcounters.PM = PMid; resetcounters.publishCommand();
-    zerolvlcalibration.PM = PMid; zerolvlcalibration.publishCommand();
-
-    resetorbitsync.PM = PMid;           resetorbitsync.publishCommand();
-    resetdroppinghitcounters.PM = PMid; resetdroppinghitcounters.publishCommand();
-    resetgenbunchoffset.PM = PMid;      resetgenbunchoffset.publishCommand();
-    resetgbterrors.PM = PMid;           resetgbterrors.publishCommand();
-    resetgbt.PM = PMid;                 resetgbt.publishCommand();
-    resetrxphaseerror.PM = PMid;        resetrxphaseerror.publishCommand();
-    sendsinglecommand.PM = PMid;        sendsinglecommand.publishCommand();
-    tgmode.PM = PMid;                   tgmode.publishCommand();                    tgmode.doPublishNew=false; tgmode.publishServices();
-    tgpattern.PM = PMid;                tgpattern.publishCommand();                 tgpattern.publishServices();
-    tgcontvalue.PM = PMid;              tgcontvalue.publishCommand();               tgcontvalue.publishServices();
-    tgsendsingle.PM = PMid;             tgsendsingle.publishCommand();
-    tgbunchfreq.PM = PMid;              tgbunchfreq.publishCommand();               tgbunchfreq.publishServices();
-    tgfreqoffset.PM = PMid;             tgfreqoffset.publishCommand();              tgfreqoffset.publishServices();
-    dgmode.PM = PMid;                   dgmode.publishCommand();                    dgmode.doPublishNew=false; dgmode.publishServices();
-    dgtrgrespondmask.PM = PMid;         dgtrgrespondmask.publishCommand();          dgtrgrespondmask.publishServices();
-    dgbunchpattern.PM = PMid;           dgbunchpattern.publishCommand();            dgbunchpattern.publishServices();
-    dgbunchfreq.PM = PMid;              dgbunchfreq.publishCommand();               dgbunchfreq.publishServices();
-    dgfreqoffset.PM = PMid;             dgfreqoffset.publishCommand();              dgfreqoffset.publishServices();
-    rdhfeeid.PM = PMid;                 rdhfeeid.publishCommand();                  rdhfeeid.publishServices();
-    rdhpar.PM = PMid;                   rdhpar.publishCommand();                    rdhpar.publishServices();
-    rdhmaxpayload.PM = PMid;            rdhmaxpayload.publishCommand();             rdhmaxpayload.publishServices();
-    rdhdetfield.PM = PMid;              rdhdetfield.publishCommand();               rdhdetfield.publishServices();
-    crutrgcomparedelay.PM = PMid;       crutrgcomparedelay.publishCommand();        crutrgcomparedelay.publishServices();
-    bciddelay.PM = PMid;                bciddelay.publishCommand();                 bciddelay.publishServices();
-    alltopm.PM = PMid;                  alltopm.publishCommand();
-
-    boardstatus.PM = PMid;      boardstatus.publishServices();
-    temperature.PM = PMid;      temperature.publishServices();
-    hdmilink.PM = PMid;         hdmilink.publishServices();
-    bits.PM = PMid;             bits.publishServices();
-    readoutmode.PM = PMid;      readoutmode.publishServices();
-    bcidsyncmode.PM = PMid;     bcidsyncmode.publishServices();
-    rxphase.PM = PMid;          rxphase.publishServices();
-    cruorbit.PM = PMid;         cruorbit.publishServices();
-    crubc.PM = PMid;            crubc.publishServices();
-    rawfifo.PM = PMid;          rawfifo.publishServices();
-    selfifo.PM = PMid;          selfifo.publishServices();
-    selfirsthit.PM = PMid;      selfirsthit.publishServices();
-    sellasthit.PM = PMid;       sellasthit.publishServices();
-    selhitsdropped.PM = PMid;   selhitsdropped.publishServices();
-    readoutrate.PM = PMid;      readoutrate.publishServices();
-*/
+    publish();
 
 }
+
+void PMPars::publish()
+{
+
+//    /*
+        //  loop for channels
+        for(quint8 i=0; i<1; i++) {
+
+            adczero[i].Ch = i+1; adczero[i].PM = PMid; adczero[i].publishServices(); adczero[i].publishCommand();
+            adcdelay[i].Ch = i+1; adcdelay[i].PM = PMid; adcdelay[i].publishServices(); adcdelay[i].publishCommand();
+            adc0offset[i].Ch = i+1; adc0offset[i].PM = PMid; adc0offset[i].publishServices(); adc0offset[i].publishCommand();
+            adc1offset[i].Ch = i+1; adc1offset[i].PM = PMid; adc1offset[i].publishServices();adc1offset[i].publishCommand();
+            adc0range[i].Ch = i+1; adc0range[i].PM = PMid; adc0range[i].publishServices(); adc0range[i].publishCommand();
+            adc1range[i].Ch = i+1; adc1range[i].PM = PMid; adc1range[i].publishServices(); adc1range[i].publishCommand();
+            timealin[i].Ch = i+1; timealin[i].PM = PMid; timealin[i].publishServices(); timealin[i].publishCommand();
+            cfdtreshold[i].Ch = i+1; cfdtreshold[i].PM = PMid; cfdtreshold[i].publishServices(); cfdtreshold[i].publishCommand();
+            cfdzero[i].Ch = i+1; cfdzero[i].PM = PMid; cfdzero[i].publishServices(); cfdzero[i].publishCommand();
+
+            alltoch.Ch = i+1; alltoch.PM = PMid; alltoch.publishCommand();
+
+            adc0meanampl[i].Ch = i+1; adc0meanampl[i].PM = PMid; adc0meanampl[i].publishServices();
+            adc1meanampl[i].Ch = i+1; adc1meanampl[i].PM = PMid; adc1meanampl[i].publishServices();
+            adc0zerolvl[i].Ch = i+1; adc0zerolvl[i].PM = PMid; adc0zerolvl[i].publishServices();
+            adc1zerolvl[i].Ch = i+1; adc1zerolvl[i].PM = PMid; adc1zerolvl[i].publishServices();
+            cfdcnt[i].Ch = i+1; cfdcnt[i].PM = PMid; cfdcnt[i].publishServices();
+            trgcnt[i].Ch = i+1; trgcnt[i].PM = PMid; trgcnt[i].publishServices();
+            meantime[i].Ch = i+1; meantime[i].PM = PMid; meantime[i].publishServices();
+        }
+
+        chmask.PM = PMid; chmask.publishCommand(); chmask.publishServices();
+        cfdsatr.PM = PMid; cfdsatr.publishCommand(); cfdsatr.publishServices();
+        orgate.PM = PMid; orgate.publishCommand(); orgate.publishServices();
+        resetcounters.PM = PMid; resetcounters.publishCommand();
+        zerolvlcalibration.PM = PMid; zerolvlcalibration.publishCommand();
+
+        resetorbitsync.PM = PMid;           resetorbitsync.publishCommand();
+        resetdroppinghitcounters.PM = PMid; resetdroppinghitcounters.publishCommand();
+        resetgenbunchoffset.PM = PMid;      resetgenbunchoffset.publishCommand();
+        resetgbterrors.PM = PMid;           resetgbterrors.publishCommand();
+        resetgbt.PM = PMid;                 resetgbt.publishCommand();
+        resetrxphaseerror.PM = PMid;        resetrxphaseerror.publishCommand();
+        sendsinglecommand.PM = PMid;        sendsinglecommand.publishCommand();
+        tgmode.PM = PMid;                   tgmode.publishCommand();                    tgmode.doPublishNew=false; tgmode.publishServices();
+        tgpattern.PM = PMid;                tgpattern.publishCommand();                 tgpattern.publishServices();
+        tgcontvalue.PM = PMid;              tgcontvalue.publishCommand();               tgcontvalue.publishServices();
+        tgsendsingle.PM = PMid;             tgsendsingle.publishCommand();
+        tgbunchfreq.PM = PMid;              tgbunchfreq.publishCommand();               tgbunchfreq.publishServices();
+        tgfreqoffset.PM = PMid;             tgfreqoffset.publishCommand();              tgfreqoffset.publishServices();
+        dgmode.PM = PMid;                   dgmode.publishCommand();                    dgmode.doPublishNew=false; dgmode.publishServices();
+        dgtrgrespondmask.PM = PMid;         dgtrgrespondmask.publishCommand();          dgtrgrespondmask.publishServices();
+        dgbunchpattern.PM = PMid;           dgbunchpattern.publishCommand();            dgbunchpattern.publishServices();
+        dgbunchfreq.PM = PMid;              dgbunchfreq.publishCommand();               dgbunchfreq.publishServices();
+        dgfreqoffset.PM = PMid;             dgfreqoffset.publishCommand();              dgfreqoffset.publishServices();
+        rdhfeeid.PM = PMid;                 rdhfeeid.publishCommand();                  rdhfeeid.publishServices();
+        rdhpar.PM = PMid;                   rdhpar.publishCommand();                    rdhpar.publishServices();
+        rdhmaxpayload.PM = PMid;            rdhmaxpayload.publishCommand();             rdhmaxpayload.publishServices();
+        rdhdetfield.PM = PMid;              rdhdetfield.publishCommand();               rdhdetfield.publishServices();
+        crutrgcomparedelay.PM = PMid;       crutrgcomparedelay.publishCommand();        crutrgcomparedelay.publishServices();
+        bciddelay.PM = PMid;                bciddelay.publishCommand();                 bciddelay.publishServices();
+        alltopm.PM = PMid;                  alltopm.publishCommand();
+
+        boardstatus.PM = PMid;      boardstatus.publishServices();
+        temperature.PM = PMid;      temperature.publishServices();
+        hdmilink.PM = PMid;         hdmilink.publishServices();
+        bits.PM = PMid;             bits.publishServices();
+        readoutmode.PM = PMid;      readoutmode.publishServices();
+        bcidsyncmode.PM = PMid;     bcidsyncmode.publishServices();
+        rxphase.PM = PMid;          rxphase.publishServices();
+        cruorbit.PM = PMid;         cruorbit.publishServices();
+        crubc.PM = PMid;            crubc.publishServices();
+        rawfifo.PM = PMid;          rawfifo.publishServices();
+        selfifo.PM = PMid;          selfifo.publishServices();
+        selfirsthit.PM = PMid;      selfirsthit.publishServices();
+        sellasthit.PM = PMid;       sellasthit.publishServices();
+        selhitsdropped.PM = PMid;   selhitsdropped.publishServices();
+        readoutrate.PM = PMid;      readoutrate.publishServices();
+//    */
+
+
+}
+
+
 
 //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
