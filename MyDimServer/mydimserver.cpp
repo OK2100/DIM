@@ -269,19 +269,19 @@ void PMCHfullPar<T>::commandHandler()
 //        switch (currCmnd->getSize()) {
         switch (currCmnd->getSize()) {
         case 1:
-            qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         case 2:
-            qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         case 4:
-            qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         case 8:
-            qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         default:
@@ -443,19 +443,19 @@ void PMfullPar<T>::commandHandler()
     if(currCmnd == setCmnd) {
         switch (sizeof(T)) {
         case 1:
-            qDebug() << "PM " << currCmnd->getName() << sizeof(T) << currCmnd->getSize() << *static_cast<T*>(currCmnd->getData());
+            // qDebug() << "PM " << currCmnd->getName() << sizeof(T) << currCmnd->getSize() << *static_cast<T*>(currCmnd->getData());
             pServer->emitSignal<T>(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         case 2:
-            qDebug() << "PM " << currCmnd->getName() << currCmnd->getSize()<< *static_cast<T*>(currCmnd->getData());
+            // qDebug() << "PM " << currCmnd->getName() << currCmnd->getSize()<< *static_cast<T*>(currCmnd->getData());
             pServer->emitSignal(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         case 4:
-            qDebug() << "PM " << currCmnd->getName() << currCmnd->getSize()<< *static_cast<T*>(currCmnd->getData());
+            // qDebug() << "PM " << currCmnd->getName() << currCmnd->getSize()<< *static_cast<T*>(currCmnd->getData());
             pServer->emitSignal(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         case 8:
-            qDebug() << "PM " << currCmnd->getName() << sizeof(T) << currCmnd->getSize()<< static_cast<T>(currCmnd->getLonglong());
+            // qDebug() << "PM " << currCmnd->getName() << sizeof(T) << currCmnd->getSize()<< static_cast<T>(currCmnd->getLonglong());
             pServer->emitSignal(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         default:
