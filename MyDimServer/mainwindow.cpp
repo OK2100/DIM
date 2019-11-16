@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QtGui>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -12,23 +13,21 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->setupUi(this);
 
 //    serv = new MyDimServer("hplu-Notebook-PC");
-//    serv->setServicesSrc("../DIM SERVER PARAMETERS - Dim Services.tsv");
-//    serv->setCommandsSrc("../DIM SERVER PARAMETERS - Dim Commands.tsv");
-
 
 ///*  Example of using without gui
-    serv = new MyDimServer("hplu-Notebook-PC");
-//    serv->setServicesSrc("../DIM SERVER PARAMETERS - Dim Services.tsv");
-//    serv->setCommandsSrc("../DIM SERVER PARAMETERS - Dim Commands.tsv");
-//    serv->startServer();
-    serv->start("FIT DIM SERVER");
+
+    QString node = "FIT DIM SERVER";
+
+    serv = new MyDimServer(node);
+    serv->startServer();
+//    serv->start("FIT DIM SERVER");
 //*/
 }
 
 MainWindow::~MainWindow()
 {
 //    delete serv;
-    delete ui;
+  //  delete ui;
 }
 
 //void MainWindow::on_setDnsButton_clicked()

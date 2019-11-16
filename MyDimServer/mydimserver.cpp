@@ -2,10 +2,6 @@
 #include "global.cpp"
 
 
-QTextStream cout(stdout);
-
-
-
 //  ==========================================  MyDimServer  =============================================
 
 MyDimServer::MyDimServer(QString dns_node,QString server_name)  :   QObject(nullptr)
@@ -20,12 +16,34 @@ MyDimServer::MyDimServer(QString dns_node,QString server_name)  :   QObject(null
     fillPMSetHash();
 
     for(quint8 i=0;i<1;i++) {
-        pm[i] = new PMPars(this);pm[i]->PMid = i+1;
+        pm[i] = new PMPars(this);
+        pm[i]->PMid = i+1;
+        pm[i]->publish();
     }
 }
 
 MyDimServer::~MyDimServer()
 {
+    stopServer();
+}
+
+void MyDimServer::startServer()
+{
+    setDnsNode(qPrintable(dnsNode));
+    start(qPrintable(serverName));
+     cout << "###################################################" << endl
+          << "Start DIM server on " << dnsNode << endl
+          << "###################################################" << endl;
+
+}
+
+void MyDimServer::stopServer()
+{
+    stop();
+    delete pm[0];
+    cout << "###################################################" << endl
+         << "Stop DIM server "  << endl
+         << "###################################################" << endl;
 
 }
 
@@ -84,7 +102,7 @@ PMPars::PMPars(MyDimServer* _server):
             adc1zerolvl (12, PMCHonlyActPar<quint16>("ADC1_ZEROLVL",_server) ),
             cfdcnt      (12, PMCHonlyActPar<quint32>("CFD_CNT",_server) ),
             trgcnt      (12, PMCHonlyActPar<quint32>("TRG_CNT",_server) ),
-            meantime    (12, PMCHonlyActPar<quint16>("MEAN_TIME",_server) ),
+            rawtdcdata  (12, PMCHonlyActPar<quint16>("RAW_TDC_DATA",_server) ),
 
             chmask                  ("CH_MASK",_server),
             cfdsatr                 ("CFD_SATR",_server),
@@ -133,7 +151,7 @@ PMPars::PMPars(MyDimServer* _server):
             readoutrate             ("REDOUT_RATE",_server)
 {
     pServer = _server;
-    publish();
+//    publish();
 }
 
 void PMPars::publish()
@@ -160,7 +178,7 @@ void PMPars::publish()
             adc1zerolvl[i].Ch = i+1;    adc1zerolvl[i].PM = PMid;                                       adc1zerolvl[i].publishServices();
             cfdcnt[i].Ch = i+1;         cfdcnt[i].PM = PMid;                                            cfdcnt[i].publishServices();
             trgcnt[i].Ch = i+1;         trgcnt[i].PM = PMid;                                            trgcnt[i].publishServices();
-            meantime[i].Ch = i+1;       meantime[i].PM = PMid;                                          meantime[i].publishServices();
+            rawtdcdata[i].Ch = i+1;     rawtdcdata[i].PM = PMid;                                        rawtdcdata[i].publishServices();
         }
 
         chmask.PM = PMid;                   chmask.publishCommand();                    chmask.publishServices();
@@ -265,23 +283,28 @@ template <class T>
 void PMCHfullPar<T>::commandHandler()
 {
     DimCommand* currCmnd = getCommand();
+    cout << "@ recieved " << currCmnd->getName();
     if(currCmnd == setCmnd) {
 //        switch (currCmnd->getSize()) {
         switch (currCmnd->getSize()) {
         case 1:
             // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         case 2:
             // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         case 4:
             // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         case 8:
             // qDebug() << "PMCH " << currCmnd->getName() << currCmnd->getSize();
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,Ch,*static_cast<T*>(setCmnd->getData()));
             break;
         default:
@@ -289,6 +312,7 @@ void PMCHfullPar<T>::commandHandler()
         }
     }
     if(currCmnd == appCmnd) {
+        cout << "@ recieved " << currCmnd->getName()  << endl;
         pServer->emitSignal(pApp,PM,Ch);
     }
 }
@@ -303,15 +327,15 @@ void PMCHfullPar<T>::publishServices()
         break;
     case 2:
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&actValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&actValue,2);
         break;
     case 4:
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&actValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&actValue,4);
         break;
     case 8:
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&actValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&actValue,8);
         break;
     default:
         Q_ASSERT(1);
@@ -324,15 +348,15 @@ void PMCHfullPar<T>::publishServices()
         break;
     case 2:
         newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&newValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&newValue,2);
         break;
     case 4:
         newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&newValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&newValue,4);
         break;
     case 8:
         newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&newValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&newValue,8);
         break;
     default:
         Q_ASSERT(1);
@@ -357,6 +381,7 @@ void PMCHonlyAppPar::publishCommand()
 void PMCHonlyAppPar::commandHandler()
 {
     DimCommand* currCmnd = getCommand();
+    cout << "@ recieved " << currCmnd->getName()  << endl;
     if(currCmnd == appCmnd) {
         pServer->emitSignal(pApp,PM,Ch);
     }
@@ -381,15 +406,15 @@ void PMCHonlyActPar<T>::publishServices()
         break;
     case 2:
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&actValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&actValue,2);
         break;
     case 4:
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&actValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&actValue,4);
         break;
     case 8:
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))
-                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&actValue,1);
+                                            +"/Ch"+QString("%1").arg(Ch,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&actValue,8);
         break;
     default:
         Q_ASSERT(1);
@@ -441,21 +466,26 @@ void PMfullPar<T>::commandHandler()
 {
     DimCommand* currCmnd = getCommand();
     if(currCmnd == setCmnd) {
+        cout << "@ recieved " << currCmnd->getName();
         switch (sizeof(T)) {
         case 1:
             // qDebug() << "PM " << currCmnd->getName() << sizeof(T) << currCmnd->getSize() << *static_cast<T*>(currCmnd->getData());
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal<T>(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         case 2:
             // qDebug() << "PM " << currCmnd->getName() << currCmnd->getSize()<< *static_cast<T*>(currCmnd->getData());
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         case 4:
             // qDebug() << "PM " << currCmnd->getName() << currCmnd->getSize()<< *static_cast<T*>(currCmnd->getData());
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         case 8:
             // qDebug() << "PM " << currCmnd->getName() << sizeof(T) << currCmnd->getSize()<< static_cast<T>(currCmnd->getLonglong());
+            cout << " " << *static_cast<T*>(setCmnd->getData()) << endl;
             pServer->emitSignal(pSet,PM,*static_cast<T*>(setCmnd->getData()));
             break;
         default:
@@ -463,6 +493,7 @@ void PMfullPar<T>::commandHandler()
         }
     }
     if(currCmnd == appCmnd) {
+        cout << "@ recieved " << currCmnd->getName()  << endl;
         pServer->emitSignal(pApp,PM);
     }
 }
@@ -475,13 +506,13 @@ void PMfullPar<T>::publishServices()
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"C:1",&actValue,1);
         break;
     case 2:
-        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&actValue,1);
+        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&actValue,2);
         break;
     case 4:
-        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&actValue,1);
+        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&actValue,4);
         break;
     case 8:
-        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&actValue,1);
+        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&actValue,8);
         break;
     default:
         Q_ASSERT(1);
@@ -493,13 +524,13 @@ void PMfullPar<T>::publishServices()
         newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"C:1",&newValue,1);
         break;
     case 2:
-        newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&newValue,1);
+        newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"S:1",&newValue,2);
         break;
     case 4:
-        newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&newValue,1);
+        newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"I:1",&newValue,4);
         break;
     case 8:
-        newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&newValue,1);
+        newServ = new DimService(qPrintable("NEW_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/control"+"/"+name),"X:1",&newValue,8);
         break;
     default:
         Q_ASSERT(1);
@@ -524,6 +555,7 @@ void PMonlyAppPar::publishCommand()
 void PMonlyAppPar::commandHandler()
 {
     DimCommand* currCmnd = getCommand();
+    cout << "@ recieved " << currCmnd->getName()  << endl;
     if(currCmnd == appCmnd) {
         pServer->emitSignal(pApp,PM);
     }
@@ -546,13 +578,13 @@ void PMonlyActPar<T>::publishServices()
         actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"C:1",&actValue,1);
         break;
     case 2:
-        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"S:1",&actValue,1);
+        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"S:1",&actValue,2);
         break;
     case 4:
-        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"I:1",&actValue,1);
+        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"I:1",&actValue,4);
         break;
     case 8:
-        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"X:1",&actValue,1);
+        actServ = new DimService(qPrintable("ACT_FT0/PM"+QString("%1").arg(PM,2,10,QLatin1Char('0'))+"/status"+"/"+name),"X:1",&actValue,8);
         break;
     default:
         Q_ASSERT(1);

@@ -1,12 +1,17 @@
 #ifndef MYDIMSERVER_H
 #define MYDIMSERVER_H
 
+#include <QDebug>
 #include <QObject>
 #include <QTextStream>
 #include <QFile>
 #include <QVector>
 
 #include "../dim_v20r26/dim/dis.hxx"
+
+
+static QTextStream cout(stdout);
+static QTextStream cin(stdin);
 
 
 class MyDimServer;
@@ -50,8 +55,22 @@ public:
     T actValue;     //  default is 0
     T newValue;     //  default is 0
     void publishServices();
-    void updateNew(T t_val){ newValue = t_val; newServ->updateService(); }
-    void updateAct(T t_val){ actValue = t_val; actServ->updateService(); }
+
+
+    void updateNew(T t_val){
+        qDebug() << actValue << " " << newValue << endl;
+        newValue = t_val;
+        newServ->updateService();
+        qDebug() << "@ new value" << name << "updated to" << newValue ;
+    }
+    void updateAct(T t_val){
+//        actValue = t_val;
+        actValue = newValue;
+        actServ->updateService();
+        qDebug() << "@ actual value" << name << "updated to" << actValue;
+    }
+
+
 };
 
 //  ===================================================================================
@@ -199,7 +218,7 @@ public:
     QVector<PMCHonlyActPar<quint16>> adc1zerolvl;
     QVector<PMCHonlyActPar<quint32>> cfdcnt;
     QVector<PMCHonlyActPar<quint32>> trgcnt;
-    QVector<PMCHonlyActPar<quint16>> meantime;
+    QVector<PMCHonlyActPar<quint16>> rawtdcdata;
 
     PMfullPar<quint16> chmask;
     PMfullPar<quint16> cfdsatr;
@@ -216,13 +235,13 @@ public:
     PMonlyAppPar sendsinglecommand;
     PMfullPar<quint8> tgmode;
     PMfullPar<quint64> tgpattern;
-    PMfullPar<quint16> tgcontvalue;
+    PMfullPar<quint8> tgcontvalue;
     PMonlyAppPar tgsendsingle;
     PMfullPar<quint16> tgbunchfreq;
     PMfullPar<quint16> tgfreqoffset;
     PMfullPar<quint16> dgmode;
-    PMfullPar<quint16> dgtrgrespondmask;
-    PMfullPar<quint16> dgbunchpattern;
+    PMfullPar<quint32> dgtrgrespondmask;
+    PMfullPar<quint32> dgbunchpattern;
     PMfullPar<quint16> dgbunchfreq;
     PMfullPar<quint16> dgfreqoffset;
     PMfullPar<quint16> rdhfeeid;
@@ -235,16 +254,16 @@ public:
 
     PMonlyActPar<quint16> boardstatus;
     PMonlyActPar<quint16> temperature;
-    PMonlyActPar<quint16> hdmilink;
+    PMonlyActPar<quint32> hdmilink;
     PMonlyActPar<quint16> bits;
-    PMonlyActPar<quint16> readoutmode;
-    PMonlyActPar<quint16> bcidsyncmode;
-    PMonlyActPar<quint16> rxphase;
-    PMonlyActPar<quint16> cruorbit;
+    PMonlyActPar<quint8> readoutmode;
+    PMonlyActPar<quint8> bcidsyncmode;
+    PMonlyActPar<quint8> rxphase;
+    PMonlyActPar<quint32> cruorbit;
     PMonlyActPar<quint16> crubc;
     PMonlyActPar<quint16> rawfifo;
     PMonlyActPar<quint16> selfifo;
-    PMonlyActPar<quint16> selfirsthit;
+    PMonlyActPar<quint32> selfirsthit;
     PMonlyActPar<quint16> sellasthit;
     PMonlyActPar<quint16> selhitsdropped;
     PMonlyActPar<quint16> readoutrate;
@@ -253,7 +272,7 @@ public:
 
 //  #####################################################################################
 
-class MyDimServer   :   QObject, public DimServer
+class MyDimServer   :  public  QObject, public DimServer
 {
     Q_OBJECT
 public:
@@ -264,6 +283,9 @@ public:
     QString dnsNode;
 
     PMPars* pm[1];
+
+    void startServer();
+    void stopServer();
 
     template<class Y>
     void emitSignal(m_setPMChSignal<Y> pSignal,quint8 PMid,quint8 Chid, Y val);
@@ -297,7 +319,7 @@ signals:
     void apply_CFD_ZERO_requested       (quint8 PM,quint8 Ch);
     void apply_ALLtoCH_requested        (quint8 PM,quint8 Ch);
 
-    void set_CH_MASKrequested   (quint8 PMid, quint16 val);
+    void set_CH_MASK_requested  (quint8 PMid, quint16 val);
     void set_CFD_SATR_requested (quint8 PMid, quint16 val);
     void set_OR_GATE_requested  (quint8 PMid, quint8 val);
 
@@ -335,12 +357,12 @@ signals:
     void apply_BCID_DELAY_requested             (quint8 PMid);
 
     void set_TG_PATTERN_requested       (quint8 PMid, quint64 val);
-    void set_TG_CONT_VALUE_requested    (quint8 PMid, quint16 val);
+    void set_TG_CONT_VALUE_requested    (quint8 PMid, quint8 val);
     void set_TG_BUNCH_FREQ_requested    (quint8 PMid, quint16 val);
     void set_TG_FREQ_OFFSET_requested   (quint8 PMid, quint16 val);
 
-    void set_DG_TRG_RESPOND_MASK_requested  (quint8 PMid, quint16 val);
-    void set_DG_BUNCH_PATTERN_requested     (quint8 PMid, quint16 val);
+    void set_DG_TRG_RESPOND_MASK_requested  (quint8 PMid, quint32 val);
+    void set_DG_BUNCH_PATTERN_requested     (quint8 PMid, quint32 val);
     void set_DG_BUNCH_FREQ_requested        (quint8 PMid, quint16 val);
     void set_DG_FREQ_OFFSET_requested       (quint8 PMid, quint16 val);
     void set_RDH_FEE_ID_requested           (quint8 PMid, quint16 val);
@@ -379,7 +401,7 @@ public slots:
     void update_act_ADC1_ZEROLVL    (quint8 PMid, quint8 CHid, quint16 val){pm[PMid-1]->adc1zerolvl[CHid-1].updateAct(val);}
     void update_act_CFD_CNT         (quint8 PMid, quint8 CHid, quint32 val){pm[PMid-1]->cfdcnt[CHid-1].updateAct(val);}
     void update_act_TRG_CNT         (quint8 PMid, quint8 CHid, quint32 val){pm[PMid-1]->trgcnt[CHid-1].updateAct(val);}
-    void update_act_MEAN_TIME       (quint8 PMid, quint8 CHid, quint16 val){pm[PMid-1]->meantime[CHid-1].updateAct(val);}
+    void update_act_RAW_TDC_DATA    (quint8 PMid, quint8 CHid, quint16 val){pm[PMid-1]->rawtdcdata[CHid-1].updateAct(val);}
 
     void update_act_CH_MASK (quint8 PMid, quint16 val){pm[PMid-1]->chmask.updateAct(val);}
     void update_act_CFD_SATR(quint8 PMid, quint16 val){pm[PMid-1]->cfdsatr.updateAct(val);}
@@ -391,12 +413,12 @@ public slots:
 
     void update_act_TG_MODE                 (quint8 PMid, quint8 val){pm[PMid-1]->tgmode.updateAct(val);}
     void update_act_TG_PATTERN              (quint8 PMid, quint64 val){pm[PMid-1]->tgpattern.updateAct(val);}
-    void update_act_TG_CONT_VALUE           (quint8 PMid, quint16 val){pm[PMid-1]->tgcontvalue.updateAct(val);}
+    void update_act_TG_CONT_VALUE           (quint8 PMid, quint8 val){pm[PMid-1]->tgcontvalue.updateAct(val);}
     void update_act_TG_BUNCH_FREQ           (quint8 PMid, quint16 val){pm[PMid-1]->tgbunchfreq.updateAct(val);}
     void update_act_TG_FREQ_OFFSET          (quint8 PMid, quint16 val){pm[PMid-1]->tgfreqoffset.updateAct(val);}
     void update_act_DG_MODE                 (quint8 PMid, quint16 val){pm[PMid-1]->dgmode.updateAct(val);}
-    void update_act_DG_TRG_RESPOND_MASK     (quint8 PMid, quint16 val){pm[PMid-1]->dgtrgrespondmask.updateAct(val);}
-    void update_act_DG_BUNCH_PATTERN        (quint8 PMid, quint16 val){pm[PMid-1]->dgbunchpattern.updateAct(val);}
+    void update_act_DG_TRG_RESPOND_MASK     (quint8 PMid, quint32 val){pm[PMid-1]->dgtrgrespondmask.updateAct(val);}
+    void update_act_DG_BUNCH_PATTERN        (quint8 PMid, quint32 val){pm[PMid-1]->dgbunchpattern.updateAct(val);}
     void update_act_DG_BUNCH_FREQ           (quint8 PMid, quint16 val){pm[PMid-1]->dgbunchfreq.updateAct(val);}
     void update_act_DG_FREQ_OFFSET          (quint8 PMid, quint16 val){pm[PMid-1]->dgfreqoffset.updateAct(val);}
     void update_act_RDH_FEE_ID              (quint8 PMid, quint16 val){pm[PMid-1]->rdhfeeid.updateAct(val);}
@@ -409,12 +431,12 @@ public slots:
 
     void update_new_TG_MODE                 (quint8 PMid, quint8 val){pm[PMid-1]->tgmode.updateNew(val);}
     void update_new_TG_PATTERN              (quint8 PMid, quint64 val){pm[PMid-1]->tgpattern.updateNew(val);}
-    void update_new_TG_CONT_VALUE           (quint8 PMid, quint16 val){pm[PMid-1]->tgcontvalue.updateNew(val);}
+    void update_new_TG_CONT_VALUE           (quint8 PMid, quint8 val){pm[PMid-1]->tgcontvalue.updateNew(val);}
     void update_new_TG_BUNCH_FREQ           (quint8 PMid, quint16 val){pm[PMid-1]->tgbunchfreq.updateNew(val);}
     void update_new_TG_FREQ_OFFSET          (quint8 PMid, quint16 val){pm[PMid-1]->tgfreqoffset.updateNew(val);}
     void update_new_DG_MODE                 (quint8 PMid, quint16 val){pm[PMid-1]->dgmode.updateNew(val);}
-    void update_new_DG_TRG_RESPOND_MASK     (quint8 PMid, quint16 val){pm[PMid-1]->dgtrgrespondmask.updateNew(val);}
-    void update_new_DG_BUNCH_PATTERN        (quint8 PMid, quint16 val){pm[PMid-1]->dgbunchpattern.updateNew(val);}
+    void update_new_DG_TRG_RESPOND_MASK     (quint8 PMid, quint32 val){pm[PMid-1]->dgtrgrespondmask.updateNew(val);}
+    void update_new_DG_BUNCH_PATTERN        (quint8 PMid, quint32 val){pm[PMid-1]->dgbunchpattern.updateNew(val);}
     void update_new_DG_BUNCH_FREQ           (quint8 PMid, quint16 val){pm[PMid-1]->dgbunchfreq.updateNew(val);}
     void update_new_DG_FREQ_OFFSET          (quint8 PMid, quint16 val){pm[PMid-1]->dgfreqoffset.updateNew(val);}
     void update_new_RDH_FEE_ID              (quint8 PMid, quint16 val){pm[PMid-1]->rdhfeeid.updateNew(val);}
@@ -426,18 +448,18 @@ public slots:
 
     void update_act_BOARD_STATUS                (quint8 PMid, quint16 val){pm[PMid-1]->boardstatus.updateAct(val);}
     void update_act_TEMPERATURE                 (quint8 PMid, quint16 val){pm[PMid-1]->temperature.updateAct(val);}
-    void update_act_HDMI_LINK                   (quint8 PMid, quint16 val){pm[PMid-1]->hdmilink.updateAct(val);}
+    void update_act_HDMI_LINK                   (quint8 PMid, quint32 val){pm[PMid-1]->hdmilink.updateAct(val);}
     void update_act_BITS                        (quint8 PMid, quint16 val){pm[PMid-1]->bits.updateAct(val);}
-    void update_act_READOUT_MODE                (quint8 PMid, quint16 val){pm[PMid-1]->readoutmode.updateAct(val);}
-    void update_act_BCID_SYNC_MODE              (quint8 PMid, quint16 val){pm[PMid-1]->bcidsyncmode.updateAct(val);}
-    void update_act_RX_PHASE                    (quint8 PMid, quint16 val){pm[PMid-1]->rxphase.updateAct(val);}
-    void update_act_CRU_ORBIT                   (quint8 PMid, quint16 val){pm[PMid-1]->cruorbit.updateAct(val);}
+    void update_act_READOUT_MODE                (quint8 PMid, quint8 val){pm[PMid-1]->readoutmode.updateAct(val);}
+    void update_act_BCID_SYNC_MODE              (quint8 PMid, quint8 val){pm[PMid-1]->bcidsyncmode.updateAct(val);}
+    void update_act_RX_PHASE                    (quint8 PMid, quint8 val){pm[PMid-1]->rxphase.updateAct(val);}
+    void update_act_CRU_ORBIT                   (quint8 PMid, quint32 val){pm[PMid-1]->cruorbit.updateAct(val);}
     void update_act_CRU_BC                      (quint8 PMid, quint16 val){pm[PMid-1]->crubc.updateAct(val);}
     void update_act_RAW_FIFO                    (quint8 PMid, quint16 val){pm[PMid-1]->rawfifo.updateAct(val);}
     void update_act_SEL_FIFO                    (quint8 PMid, quint16 val){pm[PMid-1]->selfifo.updateAct(val);}
-    void update_act_SEL_FIRST_HIT_DROPPED_ORBIT (quint8 PMid, quint16 val){pm[PMid-1]->selfirsthit.updateAct(val);}
-    void update_act_SEL_LAST_HIT_DROPPED_ORBIT  (quint8 PMid, quint16 val){pm[PMid-1]->sellasthit.updateAct(val);}
-    void update_act_SEL_HITS_DROPPED            (quint8 PMid, quint16 val){pm[PMid-1]->selhitsdropped.updateAct(val);}
+    void update_act_SEL_FIRST_HIT_DROPPED_ORBIT (quint8 PMid, quint32 val){pm[PMid-1]->selfirsthit.updateAct(val);}
+    void update_act_SEL_LAST_HIT_DROPPED_ORBIT  (quint8 PMid, quint32 val){pm[PMid-1]->sellasthit.updateAct(val);}
+    void update_act_SEL_HITS_DROPPED            (quint8 PMid, quint32 val){pm[PMid-1]->selhitsdropped.updateAct(val);}
     void update_act_READOUT_RATE                (quint8 PMid, quint16 val){pm[PMid-1]->readoutrate.updateAct(val);}
 };
 

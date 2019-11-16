@@ -64,17 +64,17 @@ QHash<QString,m_setPMSignal<T>> PMSetHash;
 
 void fillPMSetHash()
 {
-    PMSetHash<quint16>.insert("CH_MASK",    &MyDimServer::set_CH_MASKrequested);
+    PMSetHash<quint16>.insert("CH_MASK",    &MyDimServer::set_CH_MASK_requested);
     PMSetHash<quint16>.insert("CFD_SATR",   &MyDimServer::set_CFD_SATR_requested);
     PMSetHash<quint8>.insert("OR_GATE",     &MyDimServer::set_OR_GATE_requested);
     PMSetHash<quint8>.insert("TG_MODE",                nullptr);
     PMSetHash<quint64>.insert("TG_PATTERN",             &MyDimServer::set_TG_PATTERN_requested);
-    PMSetHash<quint16>.insert("TG_CONT_VALUE",          &MyDimServer::set_TG_CONT_VALUE_requested);
+    PMSetHash<quint8>.insert("TG_CONT_VALUE",           &MyDimServer::set_TG_CONT_VALUE_requested);
     PMSetHash<quint16>.insert("TG_BUNCH_FREQ",          &MyDimServer::set_TG_BUNCH_FREQ_requested);
     PMSetHash<quint16>.insert("TG_FREQ_OFFSET",         &MyDimServer::set_TG_FREQ_OFFSET_requested);
     PMSetHash<quint16>.insert("DG_MODE",                nullptr);
-    PMSetHash<quint16>.insert("DG_TRG_RESPOND_MASK",    &MyDimServer::set_DG_TRG_RESPOND_MASK_requested);
-    PMSetHash<quint16>.insert("DG_BUNCH_PATTERN",       &MyDimServer::set_DG_BUNCH_PATTERN_requested);
+    PMSetHash<quint32>.insert("DG_TRG_RESPOND_MASK",    &MyDimServer::set_DG_TRG_RESPOND_MASK_requested);
+    PMSetHash<quint32>.insert("DG_BUNCH_PATTERN",       &MyDimServer::set_DG_BUNCH_PATTERN_requested);
     PMSetHash<quint16>.insert("DG_BUNCH_FREQ",          &MyDimServer::set_DG_BUNCH_FREQ_requested);
     PMSetHash<quint16>.insert("DG_FREQ_OFFSET",         &MyDimServer::set_DG_FREQ_OFFSET_requested);
     PMSetHash<quint16>.insert("RDH_FEE_ID",             &MyDimServer::set_RDH_FEE_ID_requested);
